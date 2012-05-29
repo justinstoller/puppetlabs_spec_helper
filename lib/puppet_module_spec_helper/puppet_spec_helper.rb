@@ -1,4 +1,4 @@
-require 'puppetlabs_spec_helper'
+require 'puppet_module_spec_helper/puppetlabs_spec_helper'
 
 # Don't want puppet getting the command line arguments for rake or autotest
 ARGV.clear
@@ -11,7 +11,7 @@ require 'rspec/expectations'
 require 'pathname'
 require 'tmpdir'
 
-require 'puppetlabs_spec/files'
+require 'puppet_module_spec_helper/puppetlabs_spec/files'
 
 ######################################################################################
 #                                     WARNING                                        #
