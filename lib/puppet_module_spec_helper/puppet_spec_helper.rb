@@ -7,7 +7,6 @@ require 'puppet'
 require 'mocha'
 gem 'rspec', '>=2.0.0'
 require 'rspec/expectations'
-require 'rspec-puppet'
 
 require 'pathname'
 require 'tmpdir'
@@ -185,28 +184,4 @@ RSpec.configure do |config|
     Puppet::Util::Log.level = @log_level
   end
 
-end
-
-# TODO: These need a better home, but tests tend to assume they're in the global
-# namespace
-def param_value(subject, type, title, param)
-  subject.resource(type, title).send(:parameters)[param.to_sym]
-end
-
-def verify_contents(subject, title, expected_lines)
-  content = subject.resource('file', title).send(:parameters)[:content]
-  (content.split("\n") & expected_lines).should == expected_lines
-end
-
-# For modules with dependencies and/or that use rspec-puppet, this code
-# properly initializes the modulepath and manifests dir 
-Puppet.parse_config
-puppet_module_path = Puppet[:modulepath]
-
-fixture_path = File.expand_path(File.join(Dir.pwd, 'spec/fixtures'))
-
-RSpec.configure do |c|
-  fixture_module_path = File.join(fixture_path, 'modules')
-  c.module_path = [fixture_module_path, puppet_module_path].join(":")
-  c.manifest_dir = File.join(fixture_path, 'manifests')
 end

@@ -1,5 +1,4 @@
-require 'rubygems'
-require 'puppet'
+require 'puppet_module_spec_helper/puppet_spec_helper'
 require 'rspec-puppet'
 
 def param_value(subject, type, title, param)
