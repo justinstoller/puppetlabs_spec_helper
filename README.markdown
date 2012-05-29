@@ -22,18 +22,26 @@ Other "customers" that should use this module are:
 Usage
 =====
 
-When developing or testing modules, simply clone this repository, make it
-available in the `$LOAD_PATH`, and require 'puppet_spec_helper'.
+When developing or testing modules, simply clone this repository, and install the
+gem it contains.
 
     $ git clone git://github.com/puppetlabs/puppetlabs_spec_helper.git
-    $ export RUBYLIB="$(pwd)/puppetlabs_spec_helper:${RUBYLIB}"
+    $ cd puppetlabs_spec_helper
+    $ gem build puppet_module_spec_helper.gemspec
+    $ gem install puppet_module_spec_helper-*.gem
 
 Add this to your project's spec_helper.rb:
 
-    require 'puppet_spec_helper'
+    require 'puppet_module_spec_helper/puppet_spec_helper'
+
+Add this to your project's Rakefile:
+
+    require 'puppet_module_spec_helper/rake_tasks'
+
+And run the spec tests:
 
     $ cd stdlib
-    $ rake test
+    $ rake spec_full
 
 Issues
 ======
@@ -56,23 +64,16 @@ This project is intended to serve two purposes:
 2. To provide some convenience classes / methods for doing things like creating
    tempfiles, common rspec matchers, etc.  These classes are in the puppetlabs_spec
    directory.
+3. To provide a common set of Rake tasks so that the procedure for testing modules
+   is unified.
 
 To Use this Project
 ===================
 
-The most common usage scenario is that you will check out the 'master' branch of
-this project from github, and ensure that the root directory of the project
-is added to your RUBYLIB.  There should be few or no cases where you would want
-to have any other branch of this project besides master/HEAD.
-
-Main Files in this Project
-==========================
-
-1. puppet_spec_helper.rb: 'require' this file if you have a dependency on puppet core,
-   and you need to initialize puppet for testing.
-2. puppetlabs_spec_helper.rb: 'require' this file if you don't have a dependency on
-   puppet core, but you wish to use some of the utility classes and methods
-   bundled in the puppetlabs_spec directory of this project.
+The most common usage scenario is that you will check out the 'master'
+branch of this project from github, and install it as a rubygem.
+There should be few or no cases where you would want to have any other
+branch of this project besides master/HEAD.
 
 Initializing Puppet for Testing
 ===============================
@@ -80,10 +81,9 @@ Initializing Puppet for Testing
 In most cases, your project should be able to define a spec_helper.rb that includes
 just this one simple line:
 
-    require 'puppet_spec_helper'
+    require 'puppet_module_spec_helper/puppet_spec_helper'
 
-Then, as long as the root directory of the puppetlabs_spec_helper project is in
-your RUBYLIB, you should be all set.
+Then, as long as the gem is installed, you should be all set.
 
 NOTE that this is specifically for initializing Puppet's core.  If your project does
 not have any dependencies on puppet and you just want to use the utility classes,
