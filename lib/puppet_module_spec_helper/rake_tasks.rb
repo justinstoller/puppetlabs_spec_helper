@@ -10,6 +10,12 @@ RSpec::Core::RakeTask.new(:spec) do |t|
   t.pattern = 'spec/{classes,defines,unit}/**/*_spec.rb'
 end
 
+desc "Generate code coverage information"
+RSpec::Core::RakeTask.new(:coverage) do |t|
+  t.rcov = true
+  t.rcov_opts = ['--exclude', 'spec']
+end
+
 # This is a helper for the self-symlink entry of fixtures.yml
 def source_dir
   Dir.pwd
