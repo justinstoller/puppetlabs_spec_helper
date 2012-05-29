@@ -10,13 +10,14 @@ def verify_contents(subject, title, expected_lines)
   (content.split("\n") & expected_lines).should == expected_lines
 end
 
-Puppet.parse_config
-puppet_module_path = Puppet[:modulepath]
-
 fixture_path = File.expand_path(File.join(Dir.pwd, 'spec/fixtures'))
 
+env_module_path = ENV['MODULEPATH']
+module_path = File.join(fixture_path, 'modules')
+
+module_path = [module_path, env_module_path].join(':') if env_module_path
+
 RSpec.configure do |c|
-  fixture_module_path = File.join(fixture_path, 'modules')
-  c.module_path = [fixture_module_path, puppet_module_path].join(":")
+  c.module_path = module_path
   c.manifest_dir = File.join(fixture_path, 'manifests')
 end
