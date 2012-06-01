@@ -1,4 +1,4 @@
-require 'puppet_module_spec_helper/puppetlabs_spec_helper'
+require 'puppetlabs_spec/rspec'
 
 # Don't want puppet getting the command line arguments for rake or autotest
 ARGV.clear

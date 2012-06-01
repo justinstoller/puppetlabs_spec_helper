@@ -1,4 +1,5 @@
 require 'stringio'
+require 'rspec'
 
 ########################################################################
 # Backward compatibility for Jenkins outdated environment.
